@@ -12,15 +12,12 @@ import { NoteServiceService } from '../Services/Note Service/note-service.servic
 export class NoteComponent implements OnInit {
 
   note : Response<NoteDetail> = new Response<NoteDetail>();
-
   id : number = 0;
 
   constructor(private route : ActivatedRoute, private _noteService : NoteServiceService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      console.log(params) //log the entire params object
-      console.log(params['id']) //log the value of id
       this.id = params['id'];
       this._noteService.GetNote(this.id).subscribe( response => {
         this.note = response;

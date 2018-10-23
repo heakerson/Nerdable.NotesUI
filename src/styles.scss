@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+a.active, a.active:focus{
+  color: crimson !important;  
+}
+
+.border-top-thick{
+  border-top: 3px black solid;
+}

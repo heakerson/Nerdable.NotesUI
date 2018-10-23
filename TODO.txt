@@ -1,0 +1,20 @@
+TODO:
+======
+
+- Create a create note component
+    - Homeless notes should not show up in search results
+    - When I do a new tag search, it should know if the checkbox should be selected or not
+- Create an edit note component
+- Organize the view of the list of notes better in to cards or something
+- Create an edit tag view
+- I need to show the list of "parent" tags AND "child tags" once a tag is selected in browse
+- I need to be able to show only a certain number of tags in browse at once
+    - Show the ones with the largest number of notes associated with it
+- I need to be able to search tags
+- Have a random note button 
+- Remove the homeless tag from the main list
+- Associate a color with each tag
+    - Pick a random one and also allow one to be picked/edited
+- I need to include users
+- Start using the public property
+- Show last updated

@@ -5,5 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
+  public Username : string = "heakerson";
+  public UserId : number = 1;
+
   constructor() { }
+
 }
