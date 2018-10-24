@@ -12,6 +12,11 @@ import { UserService } from './Services/User Service/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { FormsModule } from '@angular/forms';
+import { TagExplorerComponent } from './tag-explorer/tag-explorer.component';
+import { TagComponent } from './tag/tag.component';
+import { ExplorerService } from './Services/Explorer Service/explorer.service';
+import { TopTagsComponent } from './top-tags/top-tags.component';
+import { NotesListComponent } from './notes-list/notes-list.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,11 @@ import { FormsModule } from '@angular/forms';
     CreateNoteComponent,
     HomeComponent,
     NoteComponent,
-    CreateNoteComponent
+    CreateNoteComponent,
+    TagExplorerComponent,
+    TagComponent,
+    TopTagsComponent,
+    NotesListComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +40,8 @@ import { FormsModule } from '@angular/forms';
   providers: [
     NoteServiceService,
     TagService,
-    UserService
+    UserService,
+    ExplorerService
   ],
   bootstrap: [AppComponent]
 })

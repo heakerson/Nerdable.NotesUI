@@ -4,6 +4,7 @@ import { TagSummary } from './Models/TagSummary';
 import { HttpClient } from '@angular/common/http';
 import { Response } from '../Response/Response';
 import { SearchBase } from '../Search/SearchBase';
+import { TagDetail } from './Models/TagDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class TagService {
 
   public GetAllTags() : Observable<Response<TagSummary[]>>{
     return this._http.get<Response<TagSummary[]>>(this.baseUrl + this.allTagsUrl);
+  }
+
+  public GetTag(id : number): Observable<Response<TagDetail>>{
+    return this._http.get<Response<TagDetail>>(this.baseUrl + "/" + id);
   }
 
   public SearchTags(searchTerm : string) : Observable<Response<TagSummary[]>>{

@@ -2,7 +2,7 @@
   <h1 class="mt-3">{{note.data?.title}}</h1>
   <div class="d-flex flex-row mt-3 py-3 border-top border-bottom">
     <div class="mr-2" *ngFor="let tag of note.data?.tags">
-      <button class="btn btn-info">{{tag.title}}</button>
+      <button class="btn btn-sm btn-info">{{tag.title}}</button>
     </div>
   </div>
   <h4 class="mt-3">{{note.data?.content}}</h4>

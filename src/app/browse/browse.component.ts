@@ -4,6 +4,8 @@ import { TagService } from '../Services/Tag Service/tag.service';
 import { TagSummary } from '../Services/Tag Service/Models/TagSummary';
 import { Response } from '../Services/Response/Response'
 import { NoteDetail } from '../Services/Note Service/Models/NoteDetail';
+import { TagDetail } from '../Services/Tag Service/Models/TagDetail';
+import { ExplorerService } from '../Services/Explorer Service/explorer.service';
 
 @Component({
   selector: 'app-browse',
@@ -12,44 +14,29 @@ import { NoteDetail } from '../Services/Note Service/Models/NoteDetail';
 })
 export class BrowseComponent implements OnInit {
 
-  allTagsResponse : Response<TagSummary[]> = new Response<TagSummary[]>();
   notes : Response<NoteDetail[]> = new Response<NoteDetail[]>();
-  selectionString : string = "Browse notes by selecting a tag in the left column";
+  selectionString : string = "Select a tag";
   selectedTagId : number = 0;
-  selectedTagTitle : string = "";
+  selectedTagTitle : string = " ";
+  initialSelectionMade : boolean = false;
+  selectedTag : Response<TagDetail> = new Response<TagDetail>();
 
-  constructor(private _tagService : TagService, private _noteService : NoteServiceService) { }
+  constructor(private _noteService : NoteServiceService, public _explorerService : ExplorerService) { }
 
   ngOnInit() {
-    this._tagService.GetAllTags()
-    .subscribe(response => {
-      this.allTagsResponse = response;
-    });
+    this._explorerService.GetTopTags();
   }
 
   public SelectTag(id : number){
-
-    this.selectedTagId = id;
-    let tag = this.allTagsResponse.data.find(t => t.tagId == id);
-    this.selectedTagTitle = tag.title;
-
-    this._noteService.GetNotesByTagId(id).subscribe(
-      response => {
-        this.notes = response;
-      }, 
-      err => {
-        this.notes.data = null;
-        this.selectionString = "This tag does not have any associated notes currently.";
-    });
-
+    this._explorerService.SelectTag(id);
+    this.initialSelectionMade = true;
   }
 
   public HardDeleteNote(id : number){
     this._noteService.HardDeleteNote(id).subscribe(
       successResponse => {
-        this.SelectTag(this.selectedTagId);
+        this.SelectTag(this._explorerService.SelectedTag.tagId);
       }
     );
   }
-
 }

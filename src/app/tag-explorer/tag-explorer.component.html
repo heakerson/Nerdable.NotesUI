@@ -1,0 +1,28 @@
+<div class="tag-explorer-container">
+  <div class="heading text-dark font-weight-bold">TAG EXPLORER:</div>
+
+  <div *ngIf="_explorerService?.SelectedTag?.tagId != 0, else emptyTitle">
+    <h4 class="text-primary font-weight-bold">{{_explorerService.SelectedTag?.title}}</h4>
+
+    <div class="parent-tag-container">
+        <h5 class="border-bottom mt-3 d-inline-block">ParentTags:</h5>
+    
+        <div>
+            <app-tag (click)="_explorerService.SelectTag(parent.tagId)" *ngFor="let parent of _explorerService?.SelectedTag?.parentTags" [Tag]="parent"></app-tag>
+        </div>
+    </div>
+  
+    <div class="child-tag-container">
+        <h5 class="border-bottom mt-3 d-inline-block">ChildTags:</h5>
+
+        <div>
+            <app-tag (click)="_explorerService.SelectTag(child.tagId)" *ngFor="let child of _explorerService?.SelectedTag?.childTags" [Tag]="child"></app-tag>
+        </div>
+    </div>
+
+  </div>
+
+  <ng-template #emptyTitle>
+      <h4 class="text-danger">No tag selected</h4>
+  </ng-template>
+</div>

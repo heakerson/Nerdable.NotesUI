@@ -50,6 +50,10 @@ export class CreateNoteComponent implements OnInit {
       this._tagService.SearchTags(search).subscribe(response => 
         {
           this.TagResult = response.data;
+        },
+        err => 
+        {
+          this.TagResult = [];
         });
     }
     else{

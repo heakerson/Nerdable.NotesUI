@@ -1,0 +1,14 @@
+<div class="notes-list-container">
+    <div class="heading text-dark font-weight-bold">NOTES:</div>
+
+    <div *ngIf="_explorerService.SelectedTagNotes.length == 0 && _explorerService.InitialSelectionMade">
+      <h3 class="text-danger">*{{_explorerService.EmptyNotesString}}</h3>
+    </div>
+
+    <div class="mt-2" *ngFor="let noteDetail of _explorerService.SelectedTagNotes">
+      <div class="d-flex flex-row">
+          <button routerLink="/notes/{{noteDetail.noteId}}" class="btn btn-primary w-100 py-4"><h6>{{noteDetail.title}}</h6></button>
+          <button (click)="HardDeleteNote(noteDetail.noteId)" class="btn btn-danger py-4 ml-3">Delete</button>
+      </div>
+    </div>
+</div>
