@@ -1,11 +1,18 @@
 <div class="notes-list-container">
-    <div class="heading text-dark font-weight-bold">NOTES:</div>
 
-    <div *ngIf="_explorerService.SelectedTagNotes.length == 0 && _explorerService.InitialSelectionMade">
-      <h3 class="text-danger">*{{_explorerService.EmptyNotesString}}</h3>
+    <div *ngIf="!_explorerService.NoteSearchResults?.length && !_explorerService.InitialSelectionMade, else tagTitle">
+      <h1 class="text-danger page-heading">*{{_explorerService.EmptyNotesString}}</h1>
     </div>
+    <ng-template #tagTitle class="heading text-dark font-weight-bold">
+      <h1 class="text-primary font-weight-bold page-heading">{{_explorerService.CurrentDirectory.title | uppercase}}</h1>
+      <app-search-tag [Tag]="tag" *ngFor="let tag of _explorerService.CurrentSearchTags"></app-search-tag>
+      <h5 *ngIf="!_explorerService.NoteSearchResults?.length">
+        *{{_explorerService.EmptyNotesString}}
+      </h5>
+    </ng-template>
 
-    <div class="mt-2" *ngFor="let noteDetail of _explorerService.SelectedTagNotes">
+
+    <div class="mt-2" *ngFor="let noteDetail of _explorerService.NoteSearchResults">
       <div class="d-flex flex-row">
           <button routerLink="/notes/{{noteDetail.noteId}}" class="btn btn-primary w-100 py-4"><h6>{{noteDetail.title}}</h6></button>
           <button (click)="HardDeleteNote(noteDetail.noteId)" class="btn btn-danger py-4 ml-3">Delete</button>

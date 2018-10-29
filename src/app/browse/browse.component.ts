@@ -27,15 +27,17 @@ export class BrowseComponent implements OnInit {
     this._explorerService.GetTopTags();
   }
 
+  //Do I need this??
   public SelectTag(id : number){
-    this._explorerService.SelectTag(id);
+    this._explorerService.AddTagToCurrentSearch(id);
     this.initialSelectionMade = true;
   }
 
+  //Do I need this??
   public HardDeleteNote(id : number){
     this._noteService.HardDeleteNote(id).subscribe(
       successResponse => {
-        this.SelectTag(this._explorerService.SelectedTag.tagId);
+        this.SelectTag(this._explorerService.CurrentDirectory.tagId);
       }
     );
   }

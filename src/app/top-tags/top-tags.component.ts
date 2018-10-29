@@ -17,7 +17,7 @@ export class TopTagsComponent implements OnInit {
   }
 
   public SelectTag(id : number){
-    this._explorerService.SelectTag(id);
+    this._explorerService.AddTagToCurrentSearch(id);
     this.initialSelectionMade = true;
   }
 

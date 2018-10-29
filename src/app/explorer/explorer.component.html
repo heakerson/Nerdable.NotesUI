@@ -1,0 +1,20 @@
+<div class="tag-explorer-container">
+  <div class="heading text-dark font-weight-bold">EXPLORER:</div>
+
+    <!-- <div *ngIf="_explorerService?.SelectedTag?.tagId != 0, else emptyTitle">
+        <h4 class="text-primary font-weight-bold">{{_explorerService.SelectedTag?.title}}</h4>
+    </div> -->
+
+    <!-- <ng-template #emptyTitle>
+        <h4 class="text-danger">Make a selection</h4>
+    </ng-template> -->
+
+    <div class="directory-explorer-container">
+        <app-explorer-directory *ngFor="let baseDir of BaseDirectories" [Directory]="baseDir"></app-explorer-directory>
+    </div>
+
+    <div class="heading text-dard font-weight-bold mt-4">TOP TAGS:</div>
+    <div>
+        <app-tag (click)="SelectTag(tag.tagId)" [Tag]="tag" *ngFor="let tag of _explorerService.TopTags.data"></app-tag>
+    </div>
+</div>

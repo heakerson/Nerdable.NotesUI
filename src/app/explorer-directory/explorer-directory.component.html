@@ -1,0 +1,30 @@
+<div class="explorer-directory-container">
+  <span>
+  
+    <span  class="pointer" *ngIf="!Expanded, else expanded">
+        <i (click)="ExpandChildren(Directory.tagId)" class="far fa-plus-square mr-2"></i>
+        <span (click)="SelectDirectory(Directory.tagId)">
+          <i class="fas fa-folder text-primary"></i>
+          {{Directory.title}}
+        </span>
+    </span>
+    
+    <ng-template #expanded>
+      <span class="pointer">
+          <i (click)="ExpandChildren(Directory.tagId)" class="far fa-minus-square mr-2"></i>
+          <span (click)="SelectDirectory(Directory.tagId)">
+              <i class="fas fa-folder-open text-primary"></i>
+              {{Directory.title}}
+          </span>
+      </span>
+    </ng-template>  
+
+  </span>
+
+  <div *ngIf="Expanded">
+    <div class="pl-3" *ngFor="let child of ChildDirectories">
+      <app-explorer-directory [Directory]="child"></app-explorer-directory>
+    </div>
+  </div>
+
+</div>

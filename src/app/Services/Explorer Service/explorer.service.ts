@@ -7,37 +7,25 @@ import { TagDefinition } from '@angular/compiler';
 import { TagDetail } from '../Tag Service/Models/TagDetail';
 import { NoteServiceService } from '../Note Service/note-service.service';
 import { NoteDetail } from '../Note Service/Models/NoteDetail';
-import { ExplorerEvent } from './Models/ExplorerEvent';
+import { DirectoryDetail } from '../Tag Service/Models/Directory/DirectoryDetail';
+import { NoteSearch } from '../Search/NoteSearch';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExplorerService{
-
-
-  public SelectedTagResponse : Response<TagDetail> = new Response<TagDetail>();
-  public SelectedTag : TagDetail = new TagDetail();
-
-
-  public SelectedTagNotesResponse : Response<NoteDetail[]> = new Response<NoteDetail[]>();
-  public SelectedTagNotes : NoteDetail[] = [];
+  
+  public CurrentDirectory : DirectoryDetail = new DirectoryDetail();
+  public CurrentSearchTags : TagDetail[] = [];
+  public NoteSearchResults : NoteDetail[] = [];
   public EmptyNotesString : string = "Please make a selection";
   public InitialSelectionMade : boolean = false;
-
   public TopTags : Response<TagSummary[]> = new Response<TagSummary[]>();
-
-  private Listeners : IExplorerListener[] = [];
-
+  public CurrentSearch : NoteSearch = new NoteSearch();
 
 
   constructor(private _tagService : TagService, private _noteService : NoteServiceService) 
   { 
-    this.SelectedTagResponse.data = new TagDetail();
-    this.SelectedTagResponse.data.tagId = 0;
-  }
-
-  public RegisterExplorerListener(listener : IExplorerListener){
-    this.Listeners.push(listener);
   }
 
   public GetTopTags(){
@@ -47,36 +35,76 @@ export class ExplorerService{
     });
   }
 
-  public SelectTag(id : number){
+  public UpdateSearch(){
     this.InitialSelectionMade = true;
 
-    this._tagService.GetTag(id).subscribe(
+    this._noteService.GetNotesBySearch(this.CurrentSearch).subscribe(
       successResponse => {
-        this.SelectedTagResponse = successResponse;
-        this.SelectedTag = successResponse.data;
-      },
-      errorResponse => {
-        this.SelectedTagResponse = errorResponse;
-      }
-    );
+        this.NoteSearchResults = successResponse.data;
 
-    this._noteService.GetNotesByTagId(id).subscribe(
-      successResponse => {
-        this.SelectedTagNotesResponse = successResponse;
-        this.SelectedTagNotes = this.SelectedTagNotesResponse.data;
-
-        if(this.SelectedTagNotes.length == 0)
+        if(successResponse.data === null)
         {
           this.EmptyNotesString = "No notes found for this selection";
         }
-
-        console.log(this.SelectedTagNotesResponse);
       },
       errorResponse => {
-        this.SelectedTagNotesResponse = errorResponse;
-        this.SelectedTagNotes = [];
+        this.NoteSearchResults = [];
         this.EmptyNotesString = "No notes found for this selection";
       }
     );
+  }
+
+  public AddTagToCurrentSearch(id : number){
+
+    if(!this.TagIsInSearch(id)){
+
+      this._tagService.GetTag(id).subscribe(
+        successResponse => {
+          this.CurrentSearchTags.push(successResponse.data);
+        }
+      );
+  
+      this.CurrentSearch.DirectFilterIds.push(id);
+  
+      this.UpdateSearch();
+    }
+  }
+
+
+  public RemoveTagFromCurrentSearch(id : number){
+
+    if(this.TagIsInSearch(id)){
+
+      //removing the tag from the search list and the list of tagDetails
+      var filterIdindex = this.CurrentSearch.DirectFilterIds.indexOf(id);
+      if(filterIdindex > -1){
+        this.CurrentSearch.DirectFilterIds.splice(filterIdindex, 1);
+      };
+
+      var tag = this.CurrentSearchTags.filter(t => t.tagId == id)[0];
+      this.CurrentSearchTags.splice(this.CurrentSearchTags.indexOf(tag), 1);
+  
+      this.UpdateSearch();
+    }
+  }
+
+
+  public TagIsInSearch(id : number) : boolean{
+    return this.CurrentSearchTags.filter(t => t.tagId == id)
+      .length != 0;
+  }
+
+
+  public SelectDirectory(id : number){
+
+    this._tagService.GetDirectory(id).subscribe(
+      successResponse => {
+        this.CurrentDirectory = successResponse.data;
+      }
+    );
+
+    this.CurrentSearch.DirectoryId = id;
+
+    this.UpdateSearch();
   }
 }

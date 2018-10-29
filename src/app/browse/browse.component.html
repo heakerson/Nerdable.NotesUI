@@ -1,21 +1,11 @@
-<div class="browse-container pt-4 px-3">
-
-    <div *ngIf="!notes.data?.length && !_explorerService.InitialSelectionMade, else tagTitle">
-      <h1 class="text-danger page-heading">*{{_explorerService.EmptyNotesString}}</h1>
-    </div>
-    <ng-template #tagTitle class="heading text-dark font-weight-bold">
-      <h1 class="text-primary font-weight-bold page-heading">{{_explorerService.SelectedTag.title | uppercase}}</h1>
-    </ng-template>
+<div class="browse-container px-3">
 
     <div class="row mt-3">
       <div class="col-3">
         <app-tag-explorer></app-tag-explorer>
       </div>
-      <div class="col-7">
+      <div class="col-9">
         <app-notes-list></app-notes-list>
-      </div>
-      <div class="col-2 pl-4">
-        <app-top-tags></app-top-tags>
       </div>
     </div>
 

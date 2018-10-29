@@ -6,6 +6,7 @@ import { NoteDetail } from './Models/NoteDetail';
 import { NoteCreationModel } from './Models/NoteCreationModel';
 import { NoteBase } from './Models/NoteBase';
 import { TagSummary } from '../Tag Service/Models/TagSummary';
+import { NoteSearch } from '../Search/NoteSearch';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,14 @@ import { TagSummary } from '../Tag Service/Models/TagSummary';
 export class NoteServiceService {
 
   private baseUrl : string = "https://localhost:5001/api/Notes"
-  private notesByTag : string = "/ByTagIds"
+  private notesByTag : string = "/Search"
   private createNoteUrl : string = "/Create"
   private hardDeleteUrl : string = "/HardDelete/"
 
   constructor(private _http : HttpClient) { }
 
-  public GetNotesByTagId(tagId : number) : Observable<Response<NoteDetail[]>>{
-    return this._http.post<Response<NoteDetail[]>>(this.baseUrl + this.notesByTag, tagId);
+  public GetNotesBySearch(search : NoteSearch) : Observable<Response<NoteDetail[]>>{
+    return this._http.post<Response<NoteDetail[]>>(this.baseUrl + this.notesByTag, search);
   }
 
   public GetNote(noteId : number) : Observable<Response<NoteDetail>>{

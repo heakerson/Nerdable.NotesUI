@@ -12,11 +12,13 @@ import { UserService } from './Services/User Service/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { FormsModule } from '@angular/forms';
-import { TagExplorerComponent } from './tag-explorer/tag-explorer.component';
+import { ExplorerComponent } from './explorer/explorer.component';
 import { TagComponent } from './tag/tag.component';
 import { ExplorerService } from './Services/Explorer Service/explorer.service';
 import { TopTagsComponent } from './top-tags/top-tags.component';
 import { NotesListComponent } from './notes-list/notes-list.component';
+import { ExplorerDirectoryComponent } from './explorer-directory/explorer-directory.component';
+import { SearchTagComponent } from './search-tag/search-tag.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +28,12 @@ import { NotesListComponent } from './notes-list/notes-list.component';
     HomeComponent,
     NoteComponent,
     CreateNoteComponent,
-    TagExplorerComponent,
+    ExplorerComponent,
     TagComponent,
     TopTagsComponent,
-    NotesListComponent
+    NotesListComponent,
+    ExplorerDirectoryComponent,
+    SearchTagComponent
   ],
   imports: [
     BrowserModule,

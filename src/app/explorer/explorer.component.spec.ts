@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagExplorerComponent } from './tag-explorer.component';
+import { ExplorerComponent } from './explorer.component';
 
 describe('TagExplorerComponent', () => {
-  let component: TagExplorerComponent;
-  let fixture: ComponentFixture<TagExplorerComponent>;
+  let component: ExplorerComponent;
+  let fixture: ComponentFixture<ExplorerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagExplorerComponent ]
+      declarations: [ ExplorerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TagExplorerComponent);
+    fixture = TestBed.createComponent(ExplorerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
